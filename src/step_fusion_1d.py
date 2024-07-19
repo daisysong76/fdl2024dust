@@ -1,27 +1,27 @@
-from transformers import get_scheduler
-from torch.optim import AdamW
-from lora import LoRALayer  # Import your LoRA implementation
-from video_swin_transformer import SwinTransformer3D  # Import your Swin Transformer model
+# from transformers import get_scheduler
+# from torch.optim import AdamW
+# from lora import LoRALayer  # Import your LoRA implementation
+# from video_swin_transformer import SwinTransformer3D  # Import your Swin Transformer model
 
 
-class TimeSeriesModel(nn.Module):
-    def __init__(self, ...):
-        super(TimeSeriesModel, self).__init__()
-        self.swin_transformer = SwinTransformer1D(...)  # Replace with your actual model
-        self.lora_layer = LoRALayer(in_features=256, out_features=256)  # Adjust features as per your model
+# class TimeSeriesModel(nn.Module):
+#     def __init__(self, ...):
+#         super(TimeSeriesModel, self).__init__()
+#         self.swin_transformer = SwinTransformer1D(...)  # Replace with your actual model
+#         self.lora_layer = LoRALayer(in_features=256, out_features=256)  # Adjust features as per your model
 
-    def forward(self, x):
-        x = self.swin_transformer(x)
-        x = self.lora_layer(x)  # Apply LoRA Layer
-        return x
+#     def forward(self, x):
+#         x = self.swin_transformer(x)
+#         x = self.lora_layer(x)  # Apply LoRA Layer
+#         return x
 
-optimizer = AdamW(model.parameters(), lr=args.lr)
-lr_scheduler = get_scheduler(
-    name=args.lr_scheduler_type,
-    optimizer=optimizer,
-    num_warmup_steps=args.num_warmup_steps,
-    num_training_steps=args.num_training_steps,
-)
+# optimizer = AdamW(model.parameters(), lr=args.lr)
+# lr_scheduler = get_scheduler(
+#     name=args.lr_scheduler_type,
+#     optimizer=optimizer,
+#     num_warmup_steps=args.num_warmup_steps,
+#     num_training_steps=args.num_training_steps,
+# )
 
 
 
@@ -40,18 +40,18 @@ from torch.nn import CrossEntropyLoss
 
 import logging 
 
-from torch.optim.lr_scheduler import _LRScheduler  # Import the learning rate scheduler from PyTorch
+from torch.optim.lr_scheduler import _LRScheduler 
 import math  
 import argparse  
 
 
 def evaluate_test_loss(model, test_loader, criterion, epoch, outpath):
-    model.eval()  # Set the model to evaluation mode
+    model.eval() 
     running_test_loss = 0.0  # Initialize the running test loss
-    correct = 0  # Initialize the correct predictions count
+    correct = 0  
     total = 0  
-    with torch.no_grad():  # Disable gradient computation
-        for inputs_1d, labels in test_loader:  # Iterate over the test loader
+    with torch.no_grad(): 
+        for inputs_1d, labels in test_loader:  
             inputs_1d, labels = inputs_1d.to(device), labels.to(device)  # Move inputs and labels to the device
 
             outputs = model(inputs_1d) 
@@ -65,7 +65,7 @@ def evaluate_test_loss(model, test_loader, criterion, epoch, outpath):
     average_test_loss = running_test_loss / len(test_loader)  
     test_accuracy = 100 * correct / total  
     torch.save(model.state_dict(), outpath+'e'+str(epoch)+'_'+str(np.round(test_accuracy,4))+'.pth')  # Save the model state
-    return average_test_loss, test_accuracy  # Return the average test loss and test accuracy
+    return average_test_loss, test_accuracy  
     
 if __name__ == "__main__":
     
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()  
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  
-    outpath = args.outpath  # Get output path 
+    outpath = args.outpath  
     
    
     logging.basicConfig(filename=args.logpath+'step_1d.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -120,13 +120,13 @@ if __name__ == "__main__":
         torch.cuda.manual_seed_all(seed)  # Set CUDA seed for all devices if GPU is available
     np.random.seed(seed)  # Set NumPy seed
     
-    logging.info('----- Define Data Loader -----')  # Log defining data loader
-    print('----- Define Data Loader -----')  # Print defining data loader
-    bsize = args.batch_size  # Get batch size from arguments
-    seq_len = args.num_frames  # Get number of frames from arguments
-    num_chl = args.num_channels  # Get number of channels from arguments
-    logging.info(f'batch size {bsize}')  # Log batch size
-    print(f'batch size {bsize}')  # Print batch size
+    logging.info('----- Define Data Loader -----')  
+    print('----- Define Data Loader -----')  
+    bsize = args.batch_size  
+    seq_len = args.num_frames 
+    num_chl = args.num_channels 
+    logging.info(f'batch size {bsize}') 
+    print(f'batch size {bsize}')  
 
     X_train = torch.from_numpy(pd.read_pickle(args.path_kine_train).astype('float32'))  # Load training data
     X_val = torch.from_numpy(pd.read_pickle(args.path_kine_val).astype('float32'))  # Load validation data
@@ -139,10 +139,10 @@ if __name__ == "__main__":
     val_dataset = TensorDataset(X_val, label_val)  # Create validation dataset
     val_loader = DataLoader(val_dataset, batch_size=bsize, shuffle=False)  # Create validation data loader
     
-    logging.info('----- Define 1D swin -----')  # Log defining 1D Swin Transformer
-    print('----- Define 1D swin -----')  # Print defining 1D Swin Transformer
+    logging.info('----- Define 1D swin -----')  
+    print('----- Define 1D swin -----')  
 
-    model = SwinTransformer_1D(seq_len=seq_len,  # Create Swin Transformer model
+    model = SwinTransformer_1D(seq_len=seq_len,  
                                  in_chans=num_chl, 
                                  num_classes=4,
                                  window_size=8, 
@@ -152,43 +152,43 @@ if __name__ == "__main__":
                                  depths=[2, 2, 6, 2],
                                  embed_dim=256)
     
-    device_id = 0  # Set device ID
-    device = torch.device(f"cuda:{device_id}" if torch.cuda.is_available() else "cpu")  # Set device to GPU if available
-    model = model.to(device)  # Move model to device
+    device_id = 0 
+    device = torch.device(f"cuda:{device_id}" if torch.cuda.is_available() else "cpu") 
+    model = model.to(device) 
 
-    num_epochs = args.num_epochs  # Get number of epochs from arguments
-    print_every = args.print_every  # Get print frequency from arguments
+    num_epochs = args.num_epochs  
+    print_every = args.print_every  
     lr = args.lr  # Get learning rate from arguments
-    logging.info(f'learning rate = {lr}')  # Log learning rate
-    print(f'learning rate = {lr}')  # Print learning rate
+    logging.info(f'learning rate = {lr}')  
+    print(f'learning rate = {lr}')  
 
     # Set loss function and optimizer
     criterion = nn.CrossEntropyLoss()  # Define the loss function
-    optimizer = optim.Adam(model.parameters(), lr=lr, betas=(0.9,0.999), weight_decay=0.02)  # Define the optimizer    
+    optimizer = optim.Adam(model.parameters(), lr=lr, betas=(0.9,0.999), weight_decay=0.02)     
     
-    logging.info('start training')  # Log start of training
-    print('start training')  # Print start of training
+    logging.info('start training')  
+    print('start training') 
 
-    test_loss_list = []  # Initialize list to store test losses
-    test_acc_list = []  # Initialize list to store test accuracies
-    epoch_list = []  # Initialize list to store epochs
-    for epoch in range(num_epochs):  # Loop over epochs
-        model.train()  # Set model to training mode
+    test_loss_list = []  
+    test_acc_list = []  
+    epoch_list = [] 
+    for epoch in range(num_epochs):  
+        model.train() 
 
-        running_loss = 0.0  # Initialize running loss
+        running_loss = 0.0  
 
         for i, (inputs_1d, labels) in enumerate(train_loader, 0):  # Loop over training data
 
             inputs_1d, labels = inputs_1d.to(device), labels.to(device)  # Move inputs and labels to device
             
-            optimizer.zero_grad()  # Zero the gradients
+            optimizer.zero_grad()  
 
             outputs = model(inputs_1d)  # Forward pass
             loss = criterion(outputs, labels)  # Compute loss
-            loss.backward()  # Backward pass
-            optimizer.step()  # Update weights
+            loss.backward()  
+            optimizer.step()  
 
-            running_loss += loss.item()  # Accumulate running loss
+            running_loss += loss.item() 
         
         if (epoch + 1) == 100:  # Change learning rate after 100 epochs
             optimizer = optim.Adam(model.parameters(), lr=3e-5, betas=(0.9,0.999), weight_decay=0.02)
@@ -203,11 +203,11 @@ if __name__ == "__main__":
             test_acc_list.append(test_acc_item)
 
 
-    logging.info("Training completed!")  # Log completion of training
-    print("Training completed!")  # Print completion of training
+    logging.info("Training completed!")  
+    print("Training completed!")  
     
     torch.save(model.state_dict(), outpath+'final_1d.pth')  # Save final model state
     np.save(outpath+'val_loss.npy', np.array(test_loss_list))  # Save validation loss array
     np.save(outpath+'val_acc.npy', np.array(test_acc_list))  # Save validation accuracy array
-    logging.info(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')  # Log epoch with minimum validation loss
-    print(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')  # Print epoch with minimum validation loss
+    logging.info(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)') 
+    print(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)') 
