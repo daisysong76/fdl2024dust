@@ -1,0 +1,15 @@
+myenv/
+
+pycache/
+.ipynb_checkpoints/
+data/raw/*
+data/processed/*
+data/external/*
+data/interim/*
+models/*
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.h5
+*.hdf5
