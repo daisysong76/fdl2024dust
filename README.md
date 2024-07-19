@@ -1,1 +1,2 @@
-# My AI/ML Project
+# xiaomei_dust_project
+fine tuning dust multi model
