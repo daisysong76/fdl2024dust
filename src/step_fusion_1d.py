@@ -27,7 +27,7 @@
 
 import torch  
 import torch.nn as nn 
-from models.SwinTransformer_cls import SwinTransformer_1D  
+from fdl2024project.xiaomei_dust_project.src.models.SwinTransformer_cls_old import SwinTransformer_1D  
 from torch.utils.data import Dataset, DataLoader, TensorDataset  
 
 import cv2  

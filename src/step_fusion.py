@@ -1,6 +1,6 @@
 from transformers import get_scheduler
 from torch import optim
-from lora import LoRALayer  # Import your LoRA implementation
+from fdl2024project.xiaomei_dust_project.src.models.old.lora import LoRALayer  # Import your LoRA implementation
 
 
 class FusionModel(nn.Module):

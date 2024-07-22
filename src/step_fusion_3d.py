@@ -1,6 +1,6 @@
 from transformers import get_scheduler
 from torch.optim import AdamW
-from lora import LoRALayer  # Import your LoRA implementation
+from fdl2024project.xiaomei_dust_project.src.models.old.lora import LoRALayer  # Import your LoRA implementation
 from video_swin_transformer import SwinTransformer3D  # Import your Swin Transformer model
 
 class VideoModel(nn.Module):

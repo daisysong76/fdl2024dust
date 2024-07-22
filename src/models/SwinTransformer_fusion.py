@@ -1,3 +1,10 @@
+
+# Regression Head:
+# Objective: The goal is to predict continuous values.
+# Output: Produces continuous values.
+# Activation Function: Typically does not use any activation function in the final layer (or uses a linear activation function) to allow for a range of continuous outputs.
+# Loss Function: Commonly uses Mean Squared Error (MSE) or Mean Absolute Error (MAE) for training.
+# Example Use Cases: Predicting house prices, stock market prediction, age prediction from images.# -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 """
 @File    :  SWT_V2_1D.py
@@ -101,114 +108,6 @@ def window_reverse(windows, window_size, L):
     x = x.permute(0, 1, 2, 3).contiguous().view(B, L, -1)
     return x
 
-
-# class WindowAttention_1D(nn.Module):
-#     r""" Window based multi-head self attention (W-MSA) module with relative position bias.
-#     It supports both of shifted and non-shifted window.
-#     Args:
-#         dim (int): Number of input channels.
-#         window_size (int): The height and width of the window.
-#         num_heads (int): Number of attention heads.
-#         qkv_bias (bool, optional):  If True, add a learnable bias to query, key, value. Default: True
-#         attn_drop (float, optional): Dropout ratio of attention weight. Default: 0.0
-#         proj_drop (float, optional): Dropout ratio of output. Default: 0.0
-#         pretrained_window_size (int): The height and width of the window in pre-training.
-#     """
-
-#     def __init__(self, dim, window_size, num_heads, qkv_bias=True, attn_drop=0., proj_drop=0.,
-#                  pretrained_window_size=0):
-
-#         super().__init__()
-#         self.dim = dim
-#         self.window_size = window_size  # Wl
-#         self.pretrained_window_size = pretrained_window_size
-#         self.num_heads = num_heads
-
-#         self.logit_scale = nn.Parameter(torch.log(10 * torch.ones((num_heads, 1, 1))), requires_grad=True)
-
-#         # mlp to generate continuous relative position bias
-#         self.cpb_mlp = nn.Sequential(nn.Linear(1, 512, bias=True),
-#                                      nn.ReLU(inplace=True),
-#                                      nn.Linear(512, num_heads, bias=False))
-
-#         # get relative_coords_table
-#         relative_coords_l = torch.arange(-(self.window_size - 1), self.window_size, dtype=torch.float32)
-#         relative_coords_table = torch.stack(
-#             torch.meshgrid([relative_coords_l], indexing='ij')).permute(1, 0).contiguous().unsqueeze(0)  # 1, 2*Wl-1, 1
-#         if pretrained_window_size > 0:
-#             relative_coords_table[:, :, :] /= (pretrained_window_size - 1)
-#         else:
-#             relative_coords_table[:, :, :] /= (self.window_size - 1)
-#         relative_coords_table *= 8  # normalize to -8, 8
-#         relative_coords_table = torch.sign(relative_coords_table) * torch.log2(
-#             torch.abs(relative_coords_table) + 1.0) / np.log2(8)
-
-#         self.register_buffer("relative_coords_table", relative_coords_table)
-
-#         # get pair-wise relative position index for each token inside the window
-#         coords_l = torch.arange(self.window_size)
-#         coords = torch.stack(torch.meshgrid([coords_l], indexing='ij'))  # 1, Wl
-#         coords_flatten = torch.flatten(coords, 1)  # 1, Wl
-#         relative_coords = coords_flatten[:, :, None] - coords_flatten[:, None, :]  # 1, Wl, Wl
-#         relative_coords = relative_coords.permute(1, 2, 0).contiguous()  # Wl, Wl, 1
-#         relative_coords[:, :, 0] += self.window_size - 1  # shift to start from 0
-#         relative_position_index = relative_coords.sum(-1)  # Wl, Wl
-#         self.register_buffer("relative_position_index", relative_position_index)
-
-#         self.qkv = nn.Linear(dim, dim * 3, bias=False)
-#         if qkv_bias:
-#             self.q_bias = nn.Parameter(torch.zeros(dim))
-#             self.v_bias = nn.Parameter(torch.zeros(dim))
-#         else:
-#             self.q_bias = None
-#             self.v_bias = None
-#         self.attn_drop = nn.Dropout(attn_drop)
-#         self.proj = nn.Linear(dim, dim)
-#         self.proj_drop = nn.Dropout(proj_drop)
-#         self.softmax = nn.Softmax(dim=-1)
-
-#     def forward(self, x, mask=None):
-#         """
-#         Args:
-#             x: input features with shape of (num_windows*B, N, C)
-#             mask: (0/-inf) mask with shape of (num_windows, Wl, Wl) or None
-#         """
-#         B_, N, C = x.shape
-#         qkv_bias = None
-#         if self.q_bias is not None:
-#             qkv_bias = torch.cat((self.q_bias, torch.zeros_like(self.v_bias, requires_grad=False), self.v_bias))
-#         qkv = F.linear(input=x, weight=self.qkv.weight, bias=qkv_bias)
-#         qkv = qkv.reshape(B_, N, 3, self.num_heads, -1).permute(2, 0, 3, 1, 4)
-#         q, k, v = qkv[0], qkv[1], qkv[2]  # make torchscript happy (cannot use tensor as tuple)
-
-#         # cosine attention
-#         attn = (F.normalize(q, dim=-1) @ F.normalize(k, dim=-1).transpose(-2, -1))
-#         logit_scale = torch.clamp(self.logit_scale, max=torch.log(torch.tensor(1. / 0.01, device=attn.device))).exp()
-#         attn = attn * logit_scale
-
-#         relative_position_bias_table = self.cpb_mlp(self.relative_coords_table).view(-1, self.num_heads)
-#         relative_position_bias = relative_position_bias_table[self.relative_position_index.view(-1)].view(
-#             self.window_size, self.window_size, -1)  # Wl,l,nH
-#         relative_position_bias = relative_position_bias.permute(2, 0, 1).contiguous()  # nH, Wl, Wl
-#         relative_position_bias = 16 * torch.sigmoid(relative_position_bias)
-#         attn = attn + relative_position_bias.unsqueeze(0)
-
-#         if mask is not None:
-#             nW = mask.shape[0]
-#             attn = attn.view(B_ // nW, nW, self.num_heads, N, N) + mask.unsqueeze(1).unsqueeze(0)
-#             attn = attn.view(-1, self.num_heads, N, N)
-#             attn = self.softmax(attn)
-#         else:
-#             attn = self.softmax(attn)
-
-#         attn = self.attn_drop(attn)
-
-#         x = (attn @ v).transpose(1, 2).reshape(B_, N, C)
-#         x = self.proj(x)
-#         x = self.proj_drop(x)
-#         return x
-
-###
 class WindowAttention1D(nn.Module):
     r""" Window based multi-head self attention (W-MSA) module with relative position bias.
     It supports both of shifted and non-shifted window.
@@ -628,7 +527,7 @@ class SwinTransformer_1D(nn.Module):
         self.pos_drop = nn.Dropout(p=drop_rate)
 
         # stochastic depth
-        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
+        dpr = [x.item() for torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
 
         # build layers
         self.layers = nn.ModuleList()
@@ -651,7 +550,8 @@ class SwinTransformer_1D(nn.Module):
         self.norm = norm_layer(self.num_features)
         self.avgpool = nn.AdaptiveAvgPool1d(1)
 
-        self.head = nn.Linear(self.num_features + 1024, num_classes) if num_classes > 0 else nn.Identity()
+        # Regression head
+        self.head = nn.Linear(self.num_features + 1024, 1) if num_classes > 0 else nn.Identity()
         self.apply(self._init_weights)
         for bly in self.layers:
             bly._init_respostnorm()
@@ -715,3 +615,4 @@ if __name__ == "__main__":
     x = torch.rand(2, 32, 2000)
     # x = torch.rand(2, 96, 64)
     print(net(x).shape)
+
