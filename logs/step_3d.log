@@ -1,0 +1,430 @@
+2024-07-27 04:05:48,886 - INFO - ----- Define Data Loader -----
+2024-07-27 04:05:48,887 - INFO - batch size 2
+2024-07-27 04:05:48,887 - INFO - ----- data path /home/daisysong/2024-HL-Virtual-Dosimeter/src/notebooks/train_image.pkl
+2024-07-27 04:05:48,887 - INFO - ----- Define 3D swin -----
+2024-07-27 04:05:49,641 - INFO - learning rate = 0.001
+2024-07-27 04:05:49,644 - INFO - start training
+2024-07-27 04:05:49,871 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:00,954 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:11,036 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:22,093 - INFO - Epoch: 3/100, Train Loss: nan, Val Loss: 0.23003623137871423, Val MSE: 0.23003623137871423, Val RMSE: 0.4796209246672983
+2024-07-27 04:06:22,350 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:32,315 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:42,395 - INFO - ---- 0 th batch -----
+2024-07-27 04:06:53,466 - INFO - Epoch: 6/100, Train Loss: nan, Val Loss: 17.073554674784344, Val MSE: 17.073554674784344, Val RMSE: 4.132015812504152
+2024-07-27 04:06:53,742 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:03,888 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:14,017 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:25,055 - INFO - Epoch: 9/100, Train Loss: nan, Val Loss: 2.1365551749865213, Val MSE: 2.1365551749865213, Val RMSE: 1.4616959926696527
+2024-07-27 04:07:25,355 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:35,232 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:45,265 - INFO - ---- 0 th batch -----
+2024-07-27 04:07:56,251 - INFO - Epoch: 12/100, Train Loss: nan, Val Loss: 2.0401784380277, Val MSE: 2.0401784380277, Val RMSE: 1.42834815014677
+2024-07-27 04:07:56,510 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:06,329 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:16,391 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:27,306 - INFO - Epoch: 15/100, Train Loss: nan, Val Loss: 1.9522015849749248, Val MSE: 1.9522015849749248, Val RMSE: 1.3972120758764308
+2024-07-27 04:08:27,570 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:37,596 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:47,402 - INFO - ---- 0 th batch -----
+2024-07-27 04:08:58,624 - INFO - Epoch: 18/100, Train Loss: nan, Val Loss: 1.8690786163012187, Val MSE: 1.8690786163012187, Val RMSE: 1.3671425003638862
+2024-07-27 04:08:58,875 - INFO - ---- 0 th batch -----
+2024-07-27 04:09:08,852 - INFO - ---- 0 th batch -----
+2024-07-27 04:09:18,684 - INFO - ---- 0 th batch -----
+2024-07-27 04:09:29,913 - INFO - Epoch: 21/100, Train Loss: nan, Val Loss: 1.7910003463427226, Val MSE: 1.7910003463427226, Val RMSE: 1.3382826107899342
+2024-07-27 04:09:30,206 - INFO - ---- 0 th batch -----
+2024-07-27 04:09:40,063 - INFO - ---- 0 th batch -----
+2024-07-27 04:09:50,076 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:00,975 - INFO - Epoch: 24/100, Train Loss: nan, Val Loss: 1.717944085597992, Val MSE: 1.717944085597992, Val RMSE: 1.3107036604808853
+2024-07-27 04:10:01,233 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:11,239 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:21,030 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:32,169 - INFO - Epoch: 27/100, Train Loss: nan, Val Loss: 1.6500114003817241, Val MSE: 1.6500114003817241, Val RMSE: 1.2845276954514153
+2024-07-27 04:10:32,439 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:42,217 - INFO - ---- 0 th batch -----
+2024-07-27 04:10:52,197 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:02,947 - INFO - Epoch: 30/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:11:03,218 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:12,855 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:22,730 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:33,514 - INFO - Epoch: 33/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:11:33,778 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:43,429 - INFO - ---- 0 th batch -----
+2024-07-27 04:11:53,257 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:04,006 - INFO - Epoch: 36/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:12:04,267 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:13,843 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:23,657 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:34,367 - INFO - Epoch: 39/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:12:34,632 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:44,176 - INFO - ---- 0 th batch -----
+2024-07-27 04:12:53,719 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:04,658 - INFO - Epoch: 42/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:13:04,905 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:14,536 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:24,113 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:34,881 - INFO - Epoch: 45/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:13:35,139 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:44,981 - INFO - ---- 0 th batch -----
+2024-07-27 04:13:54,615 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:05,387 - INFO - Epoch: 48/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:14:05,649 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:15,209 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:25,017 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:35,719 - INFO - Epoch: 51/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:14:36,009 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:45,551 - INFO - ---- 0 th batch -----
+2024-07-27 04:14:55,315 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:05,992 - INFO - Epoch: 54/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:15:06,250 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:15,785 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:25,554 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:36,246 - INFO - Epoch: 57/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:15:36,495 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:46,019 - INFO - ---- 0 th batch -----
+2024-07-27 04:15:55,543 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:06,520 - INFO - Epoch: 60/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:16:06,790 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:16,435 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:25,956 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:36,599 - INFO - Epoch: 63/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:16:36,860 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:46,592 - INFO - ---- 0 th batch -----
+2024-07-27 04:16:56,111 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:06,783 - INFO - Epoch: 66/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:17:07,043 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:16,608 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:26,356 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:37,008 - INFO - Epoch: 69/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:17:37,261 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:47,008 - INFO - ---- 0 th batch -----
+2024-07-27 04:17:56,663 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:07,528 - INFO - Epoch: 72/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:18:07,794 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:17,379 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:27,304 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:38,075 - INFO - Epoch: 75/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:18:38,327 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:47,856 - INFO - ---- 0 th batch -----
+2024-07-27 04:18:57,620 - INFO - ---- 0 th batch -----
+2024-07-27 04:19:08,296 - INFO - Epoch: 78/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:19:08,550 - INFO - ---- 0 th batch -----
+2024-07-27 04:19:18,089 - INFO - ---- 0 th batch -----
+2024-07-27 04:19:27,625 - INFO - ---- 0 th batch -----
+2024-07-27 04:19:38,514 - INFO - Epoch: 81/100, Train Loss: nan, Val Loss: nan, Val MSE: nan, Val RMSE: nan
+2024-07-27 04:19:38,768 - INFO - ---- 0 th batch -----
+2024-07-27 04:19:48,327 - INFO - ---- 0 th batch -----
+2024-08-02 05:27:17,536 - INFO - start training
+2024-08-02 05:27:17,563 - INFO - ----- Epoch training start 1/100 -----
+2024-08-02 05:27:17,765 - INFO - ---- 0 th batch -----
+2024-08-02 06:01:39,633 - INFO - start training
+2024-08-02 06:01:39,633 - INFO - ----- Epoch training start 1/100 -----
+2024-08-02 06:01:39,847 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:34,667 - INFO - ----- Define Data Loader -----
+2024-08-02 06:10:34,667 - INFO - batch size 1
+2024-08-02 06:10:34,667 - INFO - ----- data path /home/daisysong/2024-HL-Virtual-Dosimeter/src/notebooks/train_image.pkl
+2024-08-02 06:10:34,667 - INFO - ----- Define 3D swin -----
+2024-08-02 06:10:35,266 - INFO - learning rate = 0.0001
+2024-08-02 06:10:35,279 - INFO - start training
+2024-08-02 06:10:35,279 - INFO - ----- Epoch training start1/100 -----
+2024-08-02 06:10:35,480 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:40,954 - INFO - Epoch: 1/100, Train Loss: 3177.3356323242188, Val Loss: 141913.2890625, Val MSE: 141913.2890625, Val RMSE: 376.71380259090586
+2024-08-02 06:10:41,116 - INFO - ----- Epoch training start2/100 -----
+2024-08-02 06:10:41,348 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:46,888 - INFO - Epoch: 2/100, Train Loss: nan, Val Loss: 58.7071647644043, Val MSE: 58.7071647644043, Val RMSE: 7.6620600861912
+2024-08-02 06:10:47,055 - INFO - ----- Epoch training start3/100 -----
+2024-08-02 06:10:47,318 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:50,703 - INFO - Epoch: 3/100, Train Loss: 2.0975306192412972, Val Loss: 4.773563742637634, Val MSE: 4.773563742637634, Val RMSE: 2.1848486772858284
+2024-08-02 06:10:50,875 - INFO - ----- Epoch training start4/100 -----
+2024-08-02 06:10:51,159 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:54,218 - INFO - Epoch: 4/100, Train Loss: 16.31523642440637, Val Loss: 488.89957427978516, Val MSE: 488.89957427978516, Val RMSE: 22.111073566875607
+2024-08-02 06:10:54,411 - INFO - ----- Epoch training start5/100 -----
+2024-08-02 06:10:54,720 - INFO - ---- 0 th batch -----
+2024-08-02 06:10:58,174 - INFO - Epoch: 5/100, Train Loss: nan, Val Loss: 1330.972391764323, Val MSE: 1330.972391764323, Val RMSE: 36.48249431938999
+2024-08-02 06:10:58,343 - INFO - ----- Epoch training start6/100 -----
+2024-08-02 06:10:58,581 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:01,703 - INFO - Epoch: 6/100, Train Loss: 164.337910314401, Val Loss: 57.324666023254395, Val MSE: 57.324666023254395, Val RMSE: 7.571305437192082
+2024-08-02 06:11:01,866 - INFO - ----- Epoch training start7/100 -----
+2024-08-02 06:11:02,122 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:04,735 - INFO - Epoch: 7/100, Train Loss: nan, Val Loss: 185.371826171875, Val MSE: 185.371826171875, Val RMSE: 13.615132249518364
+2024-08-02 06:11:04,903 - INFO - ----- Epoch training start8/100 -----
+2024-08-02 06:11:05,154 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:07,770 - INFO - Epoch: 8/100, Train Loss: 77.66287724177043, Val Loss: 214.08762995402017, Val MSE: 214.08762995402017, Val RMSE: 14.631733661942462
+2024-08-02 06:11:07,935 - INFO - ----- Epoch training start9/100 -----
+2024-08-02 06:11:08,170 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:11,449 - INFO - Epoch: 9/100, Train Loss: nan, Val Loss: 11.414845863978067, Val MSE: 11.414845863978067, Val RMSE: 3.3785863706553467
+2024-08-02 06:11:11,612 - INFO - ----- Epoch training start10/100 -----
+2024-08-02 06:11:11,845 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:15,265 - INFO - Epoch: 10/100, Train Loss: nan, Val Loss: 4.956928531328837, Val MSE: 4.956928531328837, Val RMSE: 2.226416073273106
+2024-08-02 06:11:15,432 - INFO - ----- Epoch training start11/100 -----
+2024-08-02 06:11:15,685 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:18,282 - INFO - Epoch: 11/100, Train Loss: 33.09946468472481, Val Loss: 489.5908559163411, Val MSE: 489.5908559163411, Val RMSE: 22.126700068386636
+2024-08-02 06:11:18,447 - INFO - ----- Epoch training start12/100 -----
+2024-08-02 06:11:18,675 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:21,867 - INFO - Epoch: 12/100, Train Loss: nan, Val Loss: 396.03120676676434, Val MSE: 396.03120676676434, Val RMSE: 19.90053282620253
+2024-08-02 06:11:22,040 - INFO - ----- Epoch training start13/100 -----
+2024-08-02 06:11:22,276 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:26,911 - INFO - Epoch: 13/100, Train Loss: 61.11266126359502, Val Loss: 7.223842899004619, Val MSE: 7.223842899004619, Val RMSE: 2.68772076284063
+2024-08-02 06:11:27,092 - INFO - ----- Epoch training start14/100 -----
+2024-08-02 06:11:27,342 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:30,627 - INFO - Epoch: 14/100, Train Loss: 7.2837629827360315, Val Loss: 91.04238955179851, Val MSE: 91.04238955179851, Val RMSE: 9.541613571707801
+2024-08-02 06:11:30,805 - INFO - ----- Epoch training start15/100 -----
+2024-08-02 06:11:31,033 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:34,806 - INFO - Epoch: 15/100, Train Loss: 8.036352761089802, Val Loss: 25.383412837982178, Val MSE: 25.383412837982178, Val RMSE: 5.0381953949784615
+2024-08-02 06:11:34,977 - INFO - ----- Epoch training start16/100 -----
+2024-08-02 06:11:35,217 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:37,995 - INFO - Epoch: 16/100, Train Loss: nan, Val Loss: 125.63177998860677, Val MSE: 125.63177998860677, Val RMSE: 11.208558336762438
+2024-08-02 06:11:38,181 - INFO - ----- Epoch training start17/100 -----
+2024-08-02 06:11:38,443 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:42,172 - INFO - Epoch: 17/100, Train Loss: nan, Val Loss: 187.23565928141275, Val MSE: 187.23565928141275, Val RMSE: 13.683408174918
+2024-08-02 06:11:42,341 - INFO - ----- Epoch training start18/100 -----
+2024-08-02 06:11:42,590 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:46,271 - INFO - Epoch: 18/100, Train Loss: nan, Val Loss: 71.60669453938802, Val MSE: 71.60669453938802, Val RMSE: 8.462073891156235
+2024-08-02 06:11:46,441 - INFO - ----- Epoch training start19/100 -----
+2024-08-02 06:11:46,690 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:53,313 - INFO - Epoch: 19/100, Train Loss: 6.077393174171448, Val Loss: 16.440031210581463, Val MSE: 16.440031210581463, Val RMSE: 4.05463083530196
+2024-08-02 06:11:53,479 - INFO - ----- Epoch training start20/100 -----
+2024-08-02 06:11:53,715 - INFO - ---- 0 th batch -----
+2024-08-02 06:11:57,003 - INFO - Epoch: 20/100, Train Loss: nan, Val Loss: 35.21873346964518, Val MSE: 35.21873346964518, Val RMSE: 5.934537342509961
+2024-08-02 06:11:57,169 - INFO - ----- Epoch training start21/100 -----
+2024-08-02 06:11:57,402 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:01,902 - INFO - Epoch: 21/100, Train Loss: nan, Val Loss: 9.043390115102133, Val MSE: 9.043390115102133, Val RMSE: 3.0072229905848573
+2024-08-02 06:12:02,080 - INFO - ----- Epoch training start22/100 -----
+2024-08-02 06:12:02,313 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:07,279 - INFO - Epoch: 22/100, Train Loss: nan, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:07,443 - INFO - ----- Epoch training start23/100 -----
+2024-08-02 06:12:07,681 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:09,412 - INFO - Epoch: 23/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:09,582 - INFO - ----- Epoch training start24/100 -----
+2024-08-02 06:12:09,805 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:11,568 - INFO - Epoch: 24/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:11,744 - INFO - ----- Epoch training start25/100 -----
+2024-08-02 06:12:11,977 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:13,698 - INFO - Epoch: 25/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:13,863 - INFO - ----- Epoch training start26/100 -----
+2024-08-02 06:12:14,103 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:15,836 - INFO - Epoch: 26/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:15,999 - INFO - ----- Epoch training start27/100 -----
+2024-08-02 06:12:16,239 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:18,008 - INFO - Epoch: 27/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:18,174 - INFO - ----- Epoch training start28/100 -----
+2024-08-02 06:12:18,408 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:20,143 - INFO - Epoch: 28/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:20,305 - INFO - ----- Epoch training start29/100 -----
+2024-08-02 06:12:20,545 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:22,287 - INFO - Epoch: 29/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:22,445 - INFO - ----- Epoch training start30/100 -----
+2024-08-02 06:12:22,695 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:24,422 - INFO - Epoch: 30/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:24,583 - INFO - ----- Epoch training start31/100 -----
+2024-08-02 06:12:24,821 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:26,577 - INFO - Epoch: 31/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:26,740 - INFO - ----- Epoch training start32/100 -----
+2024-08-02 06:12:26,975 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:28,742 - INFO - Epoch: 32/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:28,910 - INFO - ----- Epoch training start33/100 -----
+2024-08-02 06:12:29,145 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:30,890 - INFO - Epoch: 33/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:31,053 - INFO - ----- Epoch training start34/100 -----
+2024-08-02 06:12:31,313 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:33,050 - INFO - Epoch: 34/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:33,217 - INFO - ----- Epoch training start35/100 -----
+2024-08-02 06:12:33,450 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:35,165 - INFO - Epoch: 35/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:35,328 - INFO - ----- Epoch training start36/100 -----
+2024-08-02 06:12:35,575 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:37,507 - INFO - Epoch: 36/100, Train Loss: nan, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:37,679 - INFO - ----- Epoch training start37/100 -----
+2024-08-02 06:12:37,918 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:39,671 - INFO - Epoch: 37/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:39,838 - INFO - ----- Epoch training start38/100 -----
+2024-08-02 06:12:40,078 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:41,819 - INFO - Epoch: 38/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:41,982 - INFO - ----- Epoch training start39/100 -----
+2024-08-02 06:12:42,209 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:43,958 - INFO - Epoch: 39/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:44,136 - INFO - ----- Epoch training start40/100 -----
+2024-08-02 06:12:44,386 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:46,133 - INFO - Epoch: 40/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:46,301 - INFO - ----- Epoch training start41/100 -----
+2024-08-02 06:12:46,534 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:48,278 - INFO - Epoch: 41/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:48,439 - INFO - ----- Epoch training start42/100 -----
+2024-08-02 06:12:48,669 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:50,435 - INFO - Epoch: 42/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:50,600 - INFO - ----- Epoch training start43/100 -----
+2024-08-02 06:12:50,837 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:52,571 - INFO - Epoch: 43/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:52,736 - INFO - ----- Epoch training start44/100 -----
+2024-08-02 06:12:52,986 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:54,704 - INFO - Epoch: 44/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:54,868 - INFO - ----- Epoch training start45/100 -----
+2024-08-02 06:12:55,137 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:56,945 - INFO - Epoch: 45/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:57,118 - INFO - ----- Epoch training start46/100 -----
+2024-08-02 06:12:57,358 - INFO - ---- 0 th batch -----
+2024-08-02 06:12:59,140 - INFO - Epoch: 46/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:12:59,305 - INFO - ----- Epoch training start47/100 -----
+2024-08-02 06:12:59,537 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:01,279 - INFO - Epoch: 47/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:01,454 - INFO - ----- Epoch training start48/100 -----
+2024-08-02 06:13:01,703 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:03,483 - INFO - Epoch: 48/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:03,653 - INFO - ----- Epoch training start49/100 -----
+2024-08-02 06:13:03,886 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:05,899 - INFO - Epoch: 49/100, Train Loss: nan, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:06,071 - INFO - ----- Epoch training start50/100 -----
+2024-08-02 06:13:06,297 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:08,083 - INFO - Epoch: 50/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:08,258 - INFO - ----- Epoch training start51/100 -----
+2024-08-02 06:13:08,489 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:10,251 - INFO - Epoch: 51/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:10,429 - INFO - ----- Epoch training start52/100 -----
+2024-08-02 06:13:10,667 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:12,427 - INFO - Epoch: 52/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:12,603 - INFO - ----- Epoch training start53/100 -----
+2024-08-02 06:13:12,866 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:14,824 - INFO - Epoch: 53/100, Train Loss: nan, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:15,018 - INFO - ----- Epoch training start54/100 -----
+2024-08-02 06:13:15,305 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:17,117 - INFO - Epoch: 54/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:17,287 - INFO - ----- Epoch training start55/100 -----
+2024-08-02 06:13:17,528 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:19,310 - INFO - Epoch: 55/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:19,477 - INFO - ----- Epoch training start56/100 -----
+2024-08-02 06:13:19,720 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:21,457 - INFO - Epoch: 56/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:21,623 - INFO - ----- Epoch training start57/100 -----
+2024-08-02 06:13:21,854 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:23,591 - INFO - Epoch: 57/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:23,753 - INFO - ----- Epoch training start58/100 -----
+2024-08-02 06:13:23,978 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:25,731 - INFO - Epoch: 58/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:25,895 - INFO - ----- Epoch training start59/100 -----
+2024-08-02 06:13:26,119 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:27,883 - INFO - Epoch: 59/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:28,049 - INFO - ----- Epoch training start60/100 -----
+2024-08-02 06:13:28,284 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:30,016 - INFO - Epoch: 60/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:30,190 - INFO - ----- Epoch training start61/100 -----
+2024-08-02 06:13:30,430 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:32,168 - INFO - Epoch: 61/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:32,336 - INFO - ----- Epoch training start62/100 -----
+2024-08-02 06:13:32,574 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:34,316 - INFO - Epoch: 62/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:34,481 - INFO - ----- Epoch training start63/100 -----
+2024-08-02 06:13:34,726 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:36,540 - INFO - Epoch: 63/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:36,711 - INFO - ----- Epoch training start64/100 -----
+2024-08-02 06:13:36,958 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:38,690 - INFO - Epoch: 64/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:38,854 - INFO - ----- Epoch training start65/100 -----
+2024-08-02 06:13:39,085 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:40,827 - INFO - Epoch: 65/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:40,987 - INFO - ----- Epoch training start66/100 -----
+2024-08-02 06:13:41,233 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:43,007 - INFO - Epoch: 66/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:43,170 - INFO - ----- Epoch training start67/100 -----
+2024-08-02 06:13:43,407 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:45,122 - INFO - Epoch: 67/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:45,286 - INFO - ----- Epoch training start68/100 -----
+2024-08-02 06:13:45,513 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:47,246 - INFO - Epoch: 68/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:47,418 - INFO - ----- Epoch training start69/100 -----
+2024-08-02 06:13:47,654 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:49,441 - INFO - Epoch: 69/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:49,605 - INFO - ----- Epoch training start70/100 -----
+2024-08-02 06:13:49,839 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:51,587 - INFO - Epoch: 70/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:51,754 - INFO - ----- Epoch training start71/100 -----
+2024-08-02 06:13:51,991 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:53,747 - INFO - Epoch: 71/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:53,923 - INFO - ----- Epoch training start72/100 -----
+2024-08-02 06:13:54,165 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:55,893 - INFO - Epoch: 72/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:56,059 - INFO - ----- Epoch training start73/100 -----
+2024-08-02 06:13:56,304 - INFO - ---- 0 th batch -----
+2024-08-02 06:13:58,037 - INFO - Epoch: 73/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:13:58,208 - INFO - ----- Epoch training start74/100 -----
+2024-08-02 06:13:58,453 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:00,201 - INFO - Epoch: 74/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:00,364 - INFO - ----- Epoch training start75/100 -----
+2024-08-02 06:14:00,617 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:02,349 - INFO - Epoch: 75/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:02,519 - INFO - ----- Epoch training start76/100 -----
+2024-08-02 06:14:02,756 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:04,511 - INFO - Epoch: 76/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:04,669 - INFO - ----- Epoch training start77/100 -----
+2024-08-02 06:14:04,914 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:06,638 - INFO - Epoch: 77/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:06,803 - INFO - ----- Epoch training start78/100 -----
+2024-08-02 06:14:07,040 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:08,755 - INFO - Epoch: 78/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:08,924 - INFO - ----- Epoch training start79/100 -----
+2024-08-02 06:14:09,160 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:10,912 - INFO - Epoch: 79/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:11,099 - INFO - ----- Epoch training start80/100 -----
+2024-08-02 06:14:11,367 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:13,119 - INFO - Epoch: 80/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:13,279 - INFO - ----- Epoch training start81/100 -----
+2024-08-02 06:14:13,518 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:15,248 - INFO - Epoch: 81/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:15,410 - INFO - ----- Epoch training start82/100 -----
+2024-08-02 06:14:15,665 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:17,398 - INFO - Epoch: 82/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:17,559 - INFO - ----- Epoch training start83/100 -----
+2024-08-02 06:14:17,800 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:19,539 - INFO - Epoch: 83/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:19,703 - INFO - ----- Epoch training start84/100 -----
+2024-08-02 06:14:19,951 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:21,722 - INFO - Epoch: 84/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:21,880 - INFO - ----- Epoch training start85/100 -----
+2024-08-02 06:14:22,109 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:23,856 - INFO - Epoch: 85/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:24,015 - INFO - ----- Epoch training start86/100 -----
+2024-08-02 06:14:24,248 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:25,952 - INFO - Epoch: 86/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:26,113 - INFO - ----- Epoch training start87/100 -----
+2024-08-02 06:14:26,353 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:28,078 - INFO - Epoch: 87/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:28,254 - INFO - ----- Epoch training start88/100 -----
+2024-08-02 06:14:28,496 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:30,210 - INFO - Epoch: 88/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:30,371 - INFO - ----- Epoch training start89/100 -----
+2024-08-02 06:14:30,606 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:32,316 - INFO - Epoch: 89/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:32,473 - INFO - ----- Epoch training start90/100 -----
+2024-08-02 06:14:32,706 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:34,454 - INFO - Epoch: 90/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:34,626 - INFO - ----- Epoch training start91/100 -----
+2024-08-02 06:14:34,863 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:36,577 - INFO - Epoch: 91/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:36,737 - INFO - ----- Epoch training start92/100 -----
+2024-08-02 06:14:36,982 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:38,705 - INFO - Epoch: 92/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:38,869 - INFO - ----- Epoch training start93/100 -----
+2024-08-02 06:14:39,128 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:40,861 - INFO - Epoch: 93/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:41,016 - INFO - ----- Epoch training start94/100 -----
+2024-08-02 06:14:41,248 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:42,997 - INFO - Epoch: 94/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:43,155 - INFO - ----- Epoch training start95/100 -----
+2024-08-02 06:14:43,386 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:45,087 - INFO - Epoch: 95/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:45,245 - INFO - ----- Epoch training start96/100 -----
+2024-08-02 06:14:45,521 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:47,280 - INFO - Epoch: 96/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:47,439 - INFO - ----- Epoch training start97/100 -----
+2024-08-02 06:14:47,667 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:49,386 - INFO - Epoch: 97/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:49,543 - INFO - ----- Epoch training start98/100 -----
+2024-08-02 06:14:49,776 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:51,510 - INFO - Epoch: 98/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:51,675 - INFO - ----- Epoch training start99/100 -----
+2024-08-02 06:14:51,916 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:53,640 - INFO - Epoch: 99/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:53,803 - INFO - ----- Epoch training start100/100 -----
+2024-08-02 06:14:54,049 - INFO - ---- 0 th batch -----
+2024-08-02 06:14:55,739 - INFO - Epoch: 100/100, Train Loss: 0.0, Val Loss: 0.016038177224497, Val MSE: 0.016038177224497, Val RMSE: 0.12664192522422027
+2024-08-02 06:14:55,899 - INFO - Training completed!
+2024-08-02 06:14:56,082 - INFO - epoch 22 minimize val loss (index start from 1)
