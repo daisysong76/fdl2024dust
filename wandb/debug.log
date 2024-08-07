@@ -1,0 +1,34 @@
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Current SDK version is 0.17.5
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Configure stats pid to 1219272
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Loading settings from /home/daisysong/.config/wandb/settings
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Loading settings from /home/daisysong/2024-HL-Virtual-Dosimeter/wandb/settings
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'src/temp5_3d_test_eval.py', 'program_abspath': '/home/daisysong/2024-HL-Virtual-Dosimeter/src/temp5_3d_test_eval.py', 'program': '/home/daisysong/2024-HL-Virtual-Dosimeter/src/temp5_3d_test_eval.py'}
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:_log_setup():529] Logging user logs to /home/daisysong/2024-HL-Virtual-Dosimeter/wandb/run-20240805_011115-9gmg266j/logs/debug.log
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:_log_setup():530] Logging internal logs to /home/daisysong/2024-HL-Virtual-Dosimeter/wandb/run-20240805_011115-9gmg266j/logs/debug-internal.log
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:init():569] calling init triggers
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:init():576] wandb.init called with sweep_config: {}
+config: {}
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:init():619] starting backend
+2024-08-05 01:11:15,589 INFO    MainThread:1219272 [wandb_init.py:init():623] setting up manager
+2024-08-05 01:11:15,592 INFO    MainThread:1219272 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-08-05 01:11:15,593 INFO    MainThread:1219272 [wandb_init.py:init():631] backend started and connected
+2024-08-05 01:11:15,600 INFO    MainThread:1219272 [wandb_init.py:init():720] updated telemetry
+2024-08-05 01:11:15,604 INFO    MainThread:1219272 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2024-08-05 01:11:15,925 INFO    MainThread:1219272 [wandb_run.py:_on_init():2435] communicating current version
+2024-08-05 01:11:15,978 INFO    MainThread:1219272 [wandb_run.py:_on_init():2444] got version response 
+2024-08-05 01:11:15,978 INFO    MainThread:1219272 [wandb_init.py:init():804] starting run threads in backend
+2024-08-05 01:11:16,118 INFO    MainThread:1219272 [wandb_run.py:_console_start():2413] atexit reg
+2024-08-05 01:11:16,118 INFO    MainThread:1219272 [wandb_run.py:_redirect():2255] redirect: wrap_raw
+2024-08-05 01:11:16,118 INFO    MainThread:1219272 [wandb_run.py:_redirect():2320] Wrapping output streams.
+2024-08-05 01:11:16,118 INFO    MainThread:1219272 [wandb_run.py:_redirect():2345] Redirects installed.
+2024-08-05 01:11:16,120 INFO    MainThread:1219272 [wandb_init.py:init():847] run started, returning control to user process
+2024-08-05 01:11:19,284 INFO    MainThread:1219272 [wandb_run.py:_finish():2107] finishing run trilliumtechnologies/dust/9gmg266j
+2024-08-05 01:11:19,284 INFO    MainThread:1219272 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2024-08-05 01:11:19,285 INFO    MainThread:1219272 [wandb_run.py:_restore():2352] restore
+2024-08-05 01:11:19,285 INFO    MainThread:1219272 [wandb_run.py:_restore():2358] restore done
+2024-08-05 01:11:24,789 INFO    MainThread:1219272 [wandb_run.py:_footer_history_summary_info():4016] rendering history
+2024-08-05 01:11:24,790 INFO    MainThread:1219272 [wandb_run.py:_footer_history_summary_info():4048] rendering summary
+2024-08-05 01:11:24,795 INFO    MainThread:1219272 [wandb_run.py:_footer_sync_info():3975] logging synced files
