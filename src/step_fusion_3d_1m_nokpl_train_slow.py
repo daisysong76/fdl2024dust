@@ -1,0 +1,622 @@
+# #/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/saved_experiments/configs_and_metadata/exp-4/metadata.csv
+
+import os
+import pandas as pd
+import numpy as np
+import torch
+import pickle
+from datetime import datetime
+from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader, Dataset
+import torch.nn as nn
+from models.video_swin_transformer import SwinTransformer3D
+import math
+import logging
+import gc
+import wandb
+from torch.cuda.amp import GradScaler, autocast
+import torch.optim as optim
+from torch.nn import MSELoss
+from torch.optim.lr_scheduler import _LRScheduler
+from tqdm import tqdm
+from torchvision import transforms
+import concurrent.futures
+
+class SwinTransformer3DFineTuner:
+    def __init__(self, model, num_channels, fine_tune_first_layer=True, fine_tune_last_layer=True):
+        super(SwinTransformer3DFineTuner, self).__init__()
+        self.model = model
+        self.fine_tune_first_layer = fine_tune_first_layer
+        self.fine_tune_last_layer = fine_tune_last_layer
+        self.norm_layer = nn.InstanceNorm3d(num_channels)
+        self.freeze_all_layers()
+        self.unfreeze_selected_layers()
+
+    def freeze_all_layers(self):
+        for param in self.model.parameters():
+            param.requires_grad = False
+
+    def unfreeze_selected_layers(self):
+        if self.fine_tune_first_layer:
+            for param in self.model.patch_embed.parameters():
+                param.requires_grad = True
+        if self.fine_tune_last_layer:
+            for param in self.model.head.parameters():
+                param.requires_grad = True
+
+    def get_parameters(self):
+        return filter(lambda p: p.requires_grad, self.model.parameters())
+
+    def get_optimizer(self, lr=1e-4):
+        return torch.optim.Adam(self.get_parameters(), lr=lr)
+
+    def forward(self, x):
+        x = self.norm_layer(x)
+        return self.model(x)
+
+class CombinedLRScheduler(_LRScheduler):
+    def __init__(self, optimizer, num_epochs, end_of_linear=2.5, eta_min=0, last_epoch=-1):
+        self.num_epochs = num_epochs
+        self.end_of_linear = end_of_linear
+        self.eta_min = eta_min
+        super(CombinedLRScheduler, self).__init__(optimizer, last_epoch)
+
+    def get_lr(self):
+        if self.last_epoch < self.end_of_linear:
+            factor = 1 - self.last_epoch / self.end_of_linear
+            return [base_lr * factor for base_lr in self.base_lrs]
+        else:
+            T_max = self.num_epochs - self.end_of_linear
+            return [self.eta_min + (base_lr - self.eta_min) * 
+                    (1 + math.cos(math.pi * (self.last_epoch - self.end_of_linear) / T_max)) / 2
+                    for base_lr in self.base_lrs]
+
+class CustomDataset(Dataset):
+    def __init__(self, sdo_data, labels):
+        self.sdo_data = sdo_data
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.sdo_data)
+
+    def __getitem__(self, idx):
+        sdo = torch.tensor(self.sdo_data[idx], dtype=torch.float32)
+        label = torch.tensor(self.labels[idx], dtype=torch.float32)
+        return sdo, label
+
+def load_sdo_images(input_window_start, input_window_end, sdo_data_dir):
+    sdo_images = []
+    for root, _, files in os.walk(sdo_data_dir):
+        for file in files:
+            parts = file.split('_')
+            if len(parts) < 2:
+                continue
+            timestamp_str = parts[1]
+            try:
+                timestamp = datetime.strptime(timestamp_str, '%Y%m%d%H%M')
+            except ValueError:
+                continue
+            if input_window_start <= timestamp <= input_window_end:
+                image = np.random.randn(512, 512)
+                sdo_images.append(image)
+    return np.stack(sdo_images) if sdo_images else np.array([])
+
+def load_radiation_data(target_window_start, target_window_end, rad_dose_filepath):
+    rad_data = pd.read_csv(rad_dose_filepath)
+    rad_data['timestamp_utc'] = pd.to_datetime(rad_data['timestamp_utc'])
+    mask = (rad_data['timestamp_utc'] >= target_window_start) & (rad_data['timestamp_utc'] <= target_window_end)
+    return rad_data.loc[mask, 'absorbed_dose_rate'].values
+
+def parallel_load_data(row, sdo_data_dir, rad_dose_filepath):
+    input_window_start = pd.to_datetime(row['input_window_start'])
+    input_window_end = pd.to_datetime(row['input_window_end'])
+    target_window_start = pd.to_datetime(row['target_window_start'])
+    target_window_end = pd.to_datetime(row['target_window_end'])
+    sdo_data = load_sdo_images(input_window_start, input_window_end, sdo_data_dir)
+    label_data = load_radiation_data(target_window_start, target_window_end, rad_dose_filepath)
+    return sdo_data, label_data
+
+metadata_path = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/saved_experiments/configs_and_metadata/exp-4/metadata.csv"
+metadata_df = pd.read_csv(metadata_path)
+sdo_data_dir = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/sdoml"
+rad_dose_filepath = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/radlab-private/data_tables/readings_table/per_instrument_padded/CRaTER-D1D2_readings_padded.csv"
+
+all_sdo_data = []
+all_labels = []
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    futures = [
+        executor.submit(parallel_load_data, row, sdo_data_dir, rad_dose_filepath) 
+        for _, row in metadata_df.iterrows()
+    ]
+
+    for future in tqdm(concurrent.futures.as_completed(futures), total=len(futures), desc="Loading SDO and radiation data"):
+        sdo_data, label_data = future.result()
+        all_sdo_data.append(sdo_data)
+        all_labels.append(label_data)
+
+all_sdo_data = np.array(all_sdo_data, dtype=object)
+all_labels = np.array(all_labels, dtype=object)
+all_labels_flat = np.array([np.mean(label) for label in all_labels])
+
+train_sdo, temp_sdo, train_label, temp_label = train_test_split(all_sdo_data, all_labels_flat, test_size=0.4, random_state=42, stratify=all_labels_flat)
+val_sdo, test_sdo, val_label, test_label = train_test_split(temp_sdo, temp_label, test_size=0.5, random_state=42, stratify=temp_label)
+
+train_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 512, 512)) for sdo in train_sdo])
+val_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 512, 512)) for sdo in val_sdo])
+test_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 512, 512)) for sdo in test_sdo])
+train_sdo = torch.tensor(train_sdo, dtype=torch.float32)
+val_sdo = torch.tensor(val_sdo, dtype=torch.float32)
+test_sdo = torch.tensor(test_sdo, dtype=torch.float32)
+train_label = torch.tensor(train_label, dtype=torch.float32).view(-1, 1)
+val_label = torch.tensor(val_label, dtype=torch.float32).view(-1, 1)
+test_label = torch.tensor(test_label, dtype=torch.float32).view(-1, 1)
+
+train_dataset = CustomDataset(train_sdo, train_label)
+val_dataset = CustomDataset(val_sdo, val_label)
+test_dataset = CustomDataset(test_sdo, test_label)
+
+train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=4, pin_memory=True)
+val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=4, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False, num_workers=4, pin_memory=True)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model = SwinTransformer3D(num_classes=1,  # regression
+                          embed_dim=96,
+                          mlp_ratio=4.0,
+                          patch_norm=True,
+                          patch_size=(2, 4, 4),
+                          drop_path_rate=0.001,
+                          num_heads=[4, 8, 16, 32],
+                          pretrained='https://download.openmmlab.com/mmaction/v1.0/recognition/swin/swin_base_patch4_window7_512.pth',
+                          pretrained2d=True,
+                          window_size=(8, 7, 7))
+
+model = nn.DataParallel(model, device_ids=[0, 1, 2, 3])  # Use 4 GPUs
+model = model.to(device)
+
+def init_weights(m):
+    if isinstance(m, nn.Linear) or isinstance(m, nn.Conv3d):
+        nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+    elif isinstance(m, nn.LayerNorm):
+        nn.init.constant_(m.bias, 0)
+        nn.init.constant_(m.weight, 1.0)
+
+model.apply(init_weights)
+
+wandb.init(project='dust', entity='trilliumtechnologies')
+wandb.config = {
+    "batch_size": 8,
+    "num_epochs": 100,
+    "learning_rate": 1e-4,
+    "num_frames": 10,
+    "height": 512,
+    "width": 512,
+    "seed": 93728645
+}
+
+criterion = MSELoss()
+optimizer = optim.AdamW(model.parameters(), lr=1e-4, betas=(0.9, 0.999), weight_decay=0.02)
+scheduler = CombinedLRScheduler(optimizer, num_epochs=100, end_of_linear=2.5)
+scaler = GradScaler()
+
+logging.basicConfig(filename='./logs/step_3d.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+torch.manual_seed(93728645)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(93728645)
+    torch.cuda.manual_seed_all(93728645)
+np.random.seed(93728645)
+
+outpath = './saved_models/step_3d/'
+logpath = './logs/'
+os.makedirs(outpath, exist_ok=True)
+os.makedirs(logpath, exist_ok=True)
+
+def evaluate_test_metrics(model, test_loader, criterion, epoch, outpath):
+    model.eval()
+    running_test_loss = 0.0
+    running_mse = 0.0
+    with torch.no_grad():
+        for inputs_3d, labels in tqdm(test_loader, desc="Evaluating", leave=False):
+            inputs_3d, labels = inputs_3d.float().to(device), labels.float().to(device)
+            outputs = model(inputs_3d)
+            test_loss = criterion(outputs, labels)
+            running_test_loss += test_loss.item()
+            mse = torch.mean((outputs - labels) ** 2).item()
+            running_mse += mse
+
+    average_test_loss = running_test_loss / len(test_loader)
+    average_mse = running_mse / len(test_loader)
+    average_rmse = math.sqrt(average_mse)
+
+    torch.save(model.state_dict(), os.path.join(outpath, f'e{epoch}_{np.round(average_test_loss, 4)}.pth'))
+    return average_test_loss, average_mse, average_rmse
+
+logging.info('start training')
+test_loss_list = []
+test_mse_list = []
+test_rmse_list = []
+epoch_list = []
+
+for epoch in range(100):
+    logging.info(f'----- Epoch training start {epoch + 1}/100 -----')
+    model.train()
+    running_loss = 0.0
+    early_stop_threshold = 0.02
+    patience = 5
+    best_loss = float('inf')
+    counter = 0
+
+    for i, (inputs_3d, labels) in enumerate(tqdm(train_loader, desc=f"Epoch {epoch + 1} Training", leave=False)):
+        if i % 50 == 0:
+            logging.info('---- '+str(i)+' th batch -----')
+        inputs_3d, labels = inputs_3d.float().to(device), labels.float().to(device)
+        optimizer.zero_grad()
+
+        with autocast():
+            outputs = model(inputs_3d)
+
+            if torch.isnan(outputs).any():
+                print(f"NaN detected in outputs at epoch {epoch + 1}, batch {i}")
+            if torch.isnan(labels).any():
+                print(f"NaN detected in labels at epoch {epoch + 1}, batch {i}")
+
+            loss = criterion(outputs, labels)
+            print(f"Epoch {epoch + 1}, Loss: {loss.item()}")
+
+            if torch.isnan(loss):
+                print(f"NaN detected in loss at epoch {epoch + 1}, batch {i}")
+                print(f"Outputs: {outputs}")
+                print(f"Labels: {labels}")
+
+            if loss.item() < early_stop_threshold:
+                print("Early stopping triggered.")
+                break
+
+            if loss.item() < best_loss:
+                best_loss = loss.item()
+                counter = 0
+            else:
+                counter += 1
+                if counter >= patience:
+                    print("Early stopping triggered due to no improvement.")
+                    break
+
+        scaler.scale(loss).backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+        scaler.step(optimizer)
+        scaler.update()
+
+        running_loss += loss.item()
+
+    epoch_list.append(epoch + 1)
+    test_loss_item, test_mse_item, test_rmse_item = evaluate_test_metrics(model, val_loader, criterion, epoch + 1, outpath)
+    logging.info(f"Epoch: {epoch + 1}/100, Train Loss: {running_loss / len(train_loader)}, Val Loss: {test_loss_item}, Val MSE: {test_mse_item}, Val RMSE: {test_rmse_item}")
+    print(f"Epoch: {epoch + 1}/100, Train Loss: {running_loss / len(train_loader)}, Val Loss: {test_loss_item}, Val MSE: {test_mse_item}, Val RMSE: {test_rmse_item}")
+    test_loss_list.append(test_loss_item)
+    test_mse_list.append(test_mse_item)
+    test_rmse_list.append(test_rmse_item)
+
+    wandb.log({
+        "train_loss": running_loss / len(train_loader),
+        "val_loss": test_loss_item,
+        "val_mse": test_mse_item,
+        "val_rmse": test_rmse_item,
+        "epoch": epoch + 1
+    })
+
+    scheduler.step()
+    torch.cuda.empty_cache()
+    gc.collect()
+
+logging.info("Training completed!")
+print("Training completed!")
+
+torch.save(model.state_dict(), os.path.join(outpath, 'final_3d.pth'))
+np.save(os.path.join(outpath, 'val_loss.npy'), np.array(test_loss_list))
+np.save(os.path.join(outpath, 'val_mse.npy'), np.array(test_mse_list))
+np.save(os.path.join(outpath, 'val_rmse.npy'), np.array(test_rmse_list))
+logging.info(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')
+print(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')
+
+
+# import os
+# import pandas as pd
+# import numpy as np
+# import torch
+# from datetime import datetime
+# from sklearn.model_selection import train_test_split
+# from torch.utils.data import DataLoader, Dataset
+# import torch.nn as nn
+# from models.video_swin_transformer import SwinTransformer3D
+# import math
+# import logging
+# import gc
+# import wandb
+# from torch.cuda.amp import GradScaler, autocast
+# import torch.optim as optim
+# from torch.nn import MSELoss
+# from torch.optim.lr_scheduler import _LRScheduler
+# from tqdm import tqdm
+
+# # Custom Dataset class
+# class CustomDataset(Dataset):
+#     def __init__(self, sdo_data, labels):
+#         self.sdo_data = sdo_data
+#         self.labels = labels
+
+#     def __len__(self):
+#         return len(self.sdo_data)
+
+#     def __getitem__(self, idx):
+#         sdo = torch.tensor(self.sdo_data[idx], dtype=torch.float32)
+#         label = torch.tensor(self.labels[idx], dtype=torch.float32)
+#         return sdo, label
+
+# # Function to load SDO images (placeholder)
+# def load_sdo_images(input_window_start, input_window_end, sdo_data_dir):
+#     # List to store loaded images
+#     sdo_images = []
+#     # Iterate over the files in the specified directory
+#     for root, _, files in os.walk(sdo_data_dir):
+#         for file in files:
+#             parts = file.split('_')
+#             if len(parts) < 2:
+#                 continue
+#             # Extract the timestamp from the filename
+#             timestamp_str = parts[1]
+#             try:
+#                 timestamp = datetime.strptime(timestamp_str, '%Y%m%d%H%M')
+#             except ValueError:
+#                 continue
+#             # Check if the timestamp is within the input window
+#             if input_window_start <= timestamp <= input_window_end:
+#                 # Load the image (placeholder for actual image loading)
+#                 image = np.random.randn(224, 224)  # Replace with actual image loading
+#                 sdo_images.append(image)
+#     return np.stack(sdo_images) if sdo_images else np.array([])
+
+# # Function to load radiation dose data (placeholder)
+# def load_radiation_data(target_window_start, target_window_end, rad_dose_filepath):
+#     rad_data = pd.read_csv(rad_dose_filepath)
+#     rad_data['timestamp_utc'] = pd.to_datetime(rad_data['timestamp_utc'])
+#     mask = (rad_data['timestamp_utc'] >= target_window_start) & (rad_data['timestamp_utc'] <= target_window_end)
+#     return rad_data.loc[mask, 'absorbed_dose_rate'].values
+
+# # Load metadata CSV
+# metadata_path = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/saved_experiments/configs_and_metadata/exp-4/metadata.csv"
+# metadata_df = pd.read_csv(metadata_path)
+
+# # Directories
+# sdo_data_dir = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/sdoml"
+# rad_dose_filepath = "/home/daisysong/2024-HL-Virtual-Dosimeter/data/google_cloud_buckets/radlab-private/data_tables/readings_table/per_instrument_padded/CRaTER-D1D2_readings_padded.csv"
+
+# # Lists to store all input data and labels
+# all_sdo_data = []
+# all_labels = []
+
+# # Iterate over each sample in the metadata
+# for _, row in tqdm(metadata_df.iterrows(), total=len(metadata_df), desc="Loading SDO and radiation data"):
+#     input_window_start = pd.to_datetime(row['input_window_start'])
+#     input_window_end = pd.to_datetime(row['input_window_end'])
+#     target_window_start = pd.to_datetime(row['target_window_start'])
+#     target_window_end = pd.to_datetime(row['target_window_end'])
+
+#     # Load SDO data
+#     sdo_data = load_sdo_images(input_window_start, input_window_end, sdo_data_dir)
+#     all_sdo_data.append(sdo_data)
+
+#     # Load radiation dose data
+#     label_data = load_radiation_data(target_window_start, target_window_end, rad_dose_filepath)
+#     all_labels.append(label_data)
+
+# # Convert lists to numpy arrays
+# all_sdo_data = np.array(all_sdo_data, dtype=object)  # Use dtype=object to handle arrays of different shapes
+# all_labels = np.array(all_labels, dtype=object)  # Use dtype=object to handle arrays of different shapes
+
+# # Flatten all_labels to avoid multi-dimensional issues in train_test_split
+# all_labels_flat = np.array([np.mean(label) for label in all_labels])
+
+# # Split data into training, validation, and test sets
+# train_sdo, temp_sdo, train_label, temp_label = train_test_split(all_sdo_data, all_labels_flat, test_size=0.4, random_state=42, stratify=all_labels_flat)
+# val_sdo, test_sdo, val_label, test_label = train_test_split(temp_sdo, temp_label, test_size=0.5, random_state=42, stratify=temp_label)
+
+# # Convert split data back to numpy arrays (not object arrays)
+# train_sdo = np.array(train_sdo)
+# val_sdo = np.array(val_sdo)
+# test_sdo = np.array(test_sdo)
+# train_label = np.array(train_label)
+# val_label = np.array(val_label)
+# test_label = np.array(test_label)
+
+# # Reshape the data if necessary
+# train_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 224, 224)) for sdo in train_sdo])
+# val_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 224, 224)) for sdo in val_sdo])
+# test_sdo = np.array([sdo if sdo.size > 0 else np.zeros((10, 9, 224, 224)) for sdo in test_sdo])
+# train_sdo = torch.tensor(train_sdo, dtype=torch.float32)
+# val_sdo = torch.tensor(val_sdo, dtype=torch.float32)
+# test_sdo = torch.tensor(test_sdo, dtype=torch.float32)
+# train_label = torch.tensor(train_label, dtype=torch.float32).view(-1, 1)
+# val_label = torch.tensor(val_label, dtype=torch.float32).view(-1, 1)
+# test_label = torch.tensor(test_label, dtype=torch.float32).view(-1, 1)
+
+# # Create datasets and dataloaders
+# train_dataset = CustomDataset(train_sdo, train_label)
+# val_dataset = CustomDataset(val_sdo, val_label)
+# test_dataset = CustomDataset(test_sdo, test_label)
+
+# train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=4, pin_memory=True)
+# val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=4, pin_memory=True)
+# test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False, num_workers=4, pin_memory=True)
+
+# # Initialize model
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# model = SwinTransformer3D(num_classes=1,  # regression
+#                           embed_dim=96,
+#                           mlp_ratio=4.0,
+#                           patch_norm=True,
+#                           patch_size=(2, 4, 4),
+#                           drop_path_rate=0.001,
+#                           num_heads=[4, 8, 16, 32],
+#                           pretrained='https://download.openmmlab.com/mmaction/v1.0/recognition/swin/swin_base_patch4_window7_512.pth',
+#                           pretrained2d=True,
+#                           window_size=(8, 7, 7))
+
+# model = nn.DataParallel(model, device_ids=[0, 1, 2, 3])  # Use 4 GPUs
+# model = model.to(device)
+
+# def init_weights(m):
+#     if isinstance(m, nn.Linear) or isinstance(m, nn.Conv3d):
+#         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+#     elif isinstance(m, nn.LayerNorm):
+#         nn.init.constant_(m.bias, 0)
+#         nn.init.constant_(m.weight, 1.0)
+
+# model.apply(init_weights)
+
+# # Set up WandB
+# wandb.init(project='dust', entity='trilliumtechnologies')
+# wandb.config = {
+#     "batch_size": 8,
+#     "num_epochs": 100,
+#     "learning_rate": 1e-4,
+#     "num_frames": 10,
+#     "height": 224,
+#     "width": 224,
+#     "seed": 93728645
+# }
+
+# criterion = MSELoss()
+# optimizer = optim.AdamW(model.parameters(), lr=1e-4, betas=(0.9, 0.999), weight_decay=0.02)
+# scheduler = CombinedLRScheduler(optimizer, num_epochs=100, end_of_linear=2.5)
+# scaler = GradScaler()
+
+# # Training and evaluation
+# logging.basicConfig(filename='./logs/step_3d.log', level=logging.INFO,
+#                     format='%(asctime)s - %(levelname)s - %(message)s')
+
+# torch.manual_seed(93728645)
+# if torch.cuda.is_available():
+#     torch.cuda.manual_seed(93728645)
+#     torch.cuda.manual_seed_all(93728645)
+# np.random.seed(93728645)
+
+# outpath = './saved_models/step_3d/'
+# logpath = './logs/'
+# os.makedirs(outpath, exist_ok=True)
+# os.makedirs(logpath, exist_ok=True)
+
+# def evaluate_test_metrics(model, test_loader, criterion, epoch, outpath):
+#     model.eval()
+#     running_test_loss = 0.0
+#     running_mse = 0.0
+#     with torch.no_grad():
+#         for inputs_3d, labels in tqdm(test_loader, desc="Evaluating", leave=False):
+#             inputs_3d, labels = inputs_3d.float().to(device), labels.float().to(device)
+
+#             outputs = model(inputs_3d)
+#             test_loss = criterion(outputs, labels)
+#             running_test_loss += test_loss.item()
+            
+#             mse = torch.mean((outputs - labels) ** 2).item()
+#             running_mse += mse
+
+#     average_test_loss = running_test_loss / len(test_loader)
+#     average_mse = running_mse / len(test_loader)
+#     average_rmse = math.sqrt(average_mse)
+
+#     torch.save(model.state_dict(), os.path.join(outpath, f'e{epoch}_{np.round(average_test_loss, 4)}.pth'))
+#     return average_test_loss, average_mse, average_rmse
+
+# # Training loop
+# logging.info('start training')
+# test_loss_list = []
+# test_mse_list = []
+# test_rmse_list = []
+# epoch_list = []
+
+# for epoch in range(100):
+#     logging.info(f'----- Epoch training start {epoch + 1}/100 -----')
+#     model.train()
+
+#     running_loss = 0.0
+#     early_stop_threshold = 0.02
+#     patience = 5
+#     best_loss = float('inf')
+#     counter = 0
+
+#     for i, (inputs_3d, labels) in enumerate(tqdm(train_loader, desc=f"Epoch {epoch + 1} Training", leave=False)):
+#         if i % 50 == 0:
+#             logging.info('---- '+str(i)+' th batch -----')
+#         inputs_3d, labels = inputs_3d.float().to(device), labels.float().to(device)
+#         optimizer.zero_grad()
+
+#         with autocast():
+#             outputs = model(inputs_3d)
+
+#             if torch.isnan(outputs).any():
+#                 print(f"NaN detected in outputs at epoch {epoch + 1}, batch {i}")
+#             if torch.isnan(labels).any():
+#                 print(f"NaN detected in labels at epoch {epoch + 1}, batch {i}")
+
+#             loss = criterion(outputs, labels)
+#             print(f"Epoch {epoch + 1}, Loss: {loss.item()}")
+
+#             if torch.isnan(loss):
+#                 print(f"NaN detected in loss at epoch {epoch + 1}, batch {i}")
+#                 print(f"Outputs: {outputs}")
+#                 print(f"Labels: {labels}")
+
+#             if loss.item() < early_stop_threshold:
+#                 print("Early stopping triggered.")
+#                 break
+
+#             if loss.item() < best_loss:
+#                 best_loss = loss.item()
+#                 counter = 0
+#             else:
+#                 counter += 1
+#                 if counter >= patience:
+#                     print("Early stopping triggered due to no improvement.")
+#                     break
+
+#         scaler.scale(loss).backward()
+#         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+#         scaler.step(optimizer)
+#         scaler.update()
+
+#         running_loss += loss.item()
+
+#     epoch_list.append(epoch + 1)
+#     test_loss_item, test_mse_item, test_rmse_item = evaluate_test_metrics(model, val_loader, criterion, epoch + 1, outpath)
+#     logging.info(f"Epoch: {epoch + 1}/100, Train Loss: {running_loss / len(train_loader)}, Val Loss: {test_loss_item}, Val MSE: {test_mse_item}, Val RMSE: {test_rmse_item}")
+#     print(f"Epoch: {epoch + 1}/100, Train Loss: {running_loss / len(train_loader)}, Val Loss: {test_loss_item}, Val MSE: {test_mse_item}, Val RMSE: {test_rmse_item}")
+#     test_loss_list.append(test_loss_item)
+#     test_mse_list.append(test_mse_item)
+#     test_rmse_list.append(test_rmse_item)
+
+#     wandb.log({
+#         "train_loss": running_loss / len(train_loader),
+#         "val_loss": test_loss_item,
+#         "val_mse": test_mse_item,
+#         "val_rmse": test_rmse_item,
+#         "epoch": epoch + 1
+#     })
+
+#     scheduler.step()
+#     torch.cuda.empty_cache()
+#     gc.collect()
+
+# logging.info("Training completed!")
+# print("Training completed!")
+
+# torch.save(model.state_dict(), os.path.join(outpath, 'final_3d.pth'))
+# np.save(os.path.join(outpath, 'val_loss.npy'), np.array(test_loss_list))
+# np.save(os.path.join(outpath, 'val_mse.npy'), np.array(test_mse_list))
+# np.save(os.path.join(outpath, 'val_rmse.npy'), np.array(test_rmse_list))
+# logging.info(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')
+# print(f'epoch {epoch_list[np.argmin(test_loss_list)]} minimize val loss (index start from 1)')
