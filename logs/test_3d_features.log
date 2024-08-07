@@ -1,0 +1,10 @@
+2024-08-05 00:31:15,705 - INFO - ----- Define Data Loader -----
+2024-08-05 00:31:15,706 - INFO - batch size 1
+2024-08-05 00:31:15,706 - INFO - ----- data path /home/daisysong/2024-HL-Virtual-Dosimeter/src/notebooks/test_image.pkl
+2024-08-05 00:31:15,706 - INFO - ---- Define 3D Swin ----
+2024-08-05 00:31:18,619 - INFO - test loader
+2024-08-05 01:11:16,633 - INFO - ----- Define Data Loader -----
+2024-08-05 01:11:16,633 - INFO - batch size 1
+2024-08-05 01:11:16,633 - INFO - ----- data path /home/daisysong/2024-HL-Virtual-Dosimeter/src/notebooks/test_image.pkl
+2024-08-05 01:11:16,633 - INFO - ---- Define 3D Swin ----
+2024-08-05 01:11:17,456 - INFO - test loader
